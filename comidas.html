@@ -237,11 +237,9 @@
 
         let currentRating = 0;
 
-        // Restaurar comentarios guardados
         const savedComments = JSON.parse(localStorage.getItem('comentarios')) || [];
         savedComments.forEach(addCommentToDOM);
 
-        // Interacción con estrellas
         stars.forEach(star => {
             star.addEventListener('click', function () {
                 currentRating = parseInt(this.dataset.value);
@@ -256,7 +254,6 @@
             });
         }
 
-        // Guardar comentario
         submitBtn.addEventListener('click', function () {
             const name = nameInput.value.trim();
             const comment = commentInput.value.trim();
@@ -273,24 +270,19 @@
                 date: new Date().toLocaleString()
             };
 
-            // Guardar en localStorage
             savedComments.push(newComment);
             localStorage.setItem('comentarios', JSON.stringify(savedComments));
 
             addCommentToDOM(newComment);
 
-            // Limpiar campos
             nameInput.value = '';
             commentInput.value = '';
             updateStars(0);
             currentRating = 0;
         });
 
-        // Mostrar en el DOM
         function addCommentToDOM(comment) {
             const div = document.createElement('div');
-            div.classList.add('comment');
-
             const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
 
             div.innerHTML = `
@@ -299,7 +291,6 @@
                 <p>Calificación: <span style="color:gold">${stars}</span></p>
                 <hr>
             `;
-
             commentsList.prepend(div);
         }
     });
