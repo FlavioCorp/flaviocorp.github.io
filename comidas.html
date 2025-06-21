@@ -123,12 +123,12 @@
             <h2>Deja tu comentario</h2>
             <input type="text" id="name" placeholder="Tu nombre" required>
             <div class="star-rating">
-    <span class="star" data-value="1">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="5">★</span>
-</div>
+                <span class="star" data-value="5">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="1">★</span>
+            </div>
             <textarea id="comment" rows="4" placeholder="Escribe tu comentario aquí..." required></textarea>
             <button id="submit-btn">Enviar</button>
 
@@ -226,75 +226,5 @@
             
     <script src="index.js"></script>
     <script src="script.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.star');
-        const nameInput = document.getElementById('name');
-        const commentInput = document.getElementById('comment');
-        const submitBtn = document.getElementById('submit-btn');
-        const commentsList = document.getElementById('comments-list');
-
-        let currentRating = 0;
-
-        const savedComments = JSON.parse(localStorage.getItem('comentarios')) || [];
-        savedComments.forEach(addCommentToDOM);
-
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                currentRating = parseInt(this.dataset.value);
-                updateStars(currentRating);
-            });
-        });
-
-        function updateStars(value) {
-            stars.forEach(star => {
-                const val = parseInt(star.dataset.value);
-                star.style.color = val <= value ? 'gold' : 'gray';
-            });
-        }
-
-        submitBtn.addEventListener('click', function () {
-            const name = nameInput.value.trim();
-            const comment = commentInput.value.trim();
-
-            if (name === '' || comment === '' || currentRating === 0) {
-                alert('Por favor completa todos los campos y selecciona una calificación.');
-                return;
-            }
-
-            const newComment = {
-                name,
-                comment,
-                rating: currentRating,
-                date: new Date().toLocaleString()
-            };
-
-            savedComments.push(newComment);
-            localStorage.setItem('comentarios', JSON.stringify(savedComments));
-
-            addCommentToDOM(newComment);
-
-            nameInput.value = '';
-            commentInput.value = '';
-            updateStars(0);
-            currentRating = 0;
-        });
-
-        function addCommentToDOM(comment) {
-            const div = document.createElement('div');
-            const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
-
-            div.innerHTML = `
-                <p><strong>${comment.name}</strong> (${comment.date})</p>
-                <p>${comment.comment}</p>
-                <p>Calificación: <span style="color:gold">${stars}</span></p>
-                <hr>
-            `;
-            commentsList.prepend(div);
-        }
-    });
-</script>
-
 </body>
 </html>
