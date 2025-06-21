@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Flavio Restaurante</title>
 
-    <!-- Icons and Manifest -->
+    <!-- Favicon y manifest -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -15,14 +15,145 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Stylesheet -->
+    <!-- Estilos CSS -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Estilos en línea específicos -->
+    <style>
+        /* Estilo para el botón */
+        #play-pause-btn {
+            position: fixed;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+
+        /* Estilo para los íconos */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Oculta la etiqueta de audio */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<style>
+        /* Estilo para los íconos de música */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Oculta la etiqueta de audio */
+        audio {
+            display: none;
+        }
+
+        /* Estilos para el modal y el fondo oscuro */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+		.star-rating {
+            display: inline-block;
+            font-size: 0;
+        }
+        .star-rating .star {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Sección de comidas</h1>
-        <p>Comidas completas aquí</p>
 
+    <!-- Encabezado -->
+    <header>
+        <h1>Flavio Restaurante</h1>
+        <p>¡Bienvenido!</p>
+        <audio id="bg-music">
+            <source src="salsa.mp3" type="audio/mpeg">
+            Tu navegador no soporta la etiqueta de audio.
+        </audio>
+    
+        <!-- Botón de play/pause -->
+        <button id="play-pause-btn" onclick="togglePlayPause()">
+            <!-- Ícono de play -->
+            <svg id="play-icon" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Ícono de pausa, inicialmente oculto -->
+            <svg id="pause-icon" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+                <path d="M6 19h4V5H6zm8-14v14h4V5z"/>
+            </svg>
+        </button>
+        <script>
+            // Función para alternar entre play y pausa
+            function togglePlayPause() {
+                var audio = document.getElementById('bg-music');
+                var playIcon = document.getElementById('play-icon');
+                var pauseIcon = document.getElementById('pause-icon');
+    
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'inline';
+                } else {
+                    audio.pause();
+                    playIcon.style.display = 'inline';
+                    pauseIcon.style.display = 'none';
+                }
+            }
+        </script>
+        
+        <!-- Botón para controlar la música de fondo -->
+        <button id="play-pause-btn" onclick="togglePlayPause()">
+            <!-- Ícono de play -->
+            <svg id="play-icon" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Ícono de pausa, inicialmente oculto -->
+            <svg id="pause-icon" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+                <path d="M6 19h4V5H6zm8-14v14h4V5z"/>
+            </svg>
+        </button>
+
+        <!-- Carrito de compras -->
         <div class="container-icon">
             <div class="container-cart-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-cart">
@@ -50,85 +181,66 @@
                 <div class="cart-total hidden">
                     <h3>Total:</h3>
                     <span class="total-pagar">$148</span>
-                    <button id="send-order-btn">Enviar Pedido</button>
                 </div>
                 <p class="cart-empty">El carrito está vacío</p>
             </div>
         </div>
     </header>
 
-    <main class="container2">
+    <!-- Contenido principal -->
+    <main class="container3">
         <div class="container">
             <div class="container-items">
+                <!-- Sección de comidas -->
                 <div class="item">
                     <figure>
-                        <img src="La-Granja-Real-Food-Chicken-1-Pollo-a-la-Brasa.png" alt="Pollo a la brasa">
+                        <a class="boton-con-imagen" href="comidas.html">
+                            <img src="La-Granja-Real-Food-Chicken-1-Pollo-a-la-Brasa.png" alt="Pollo a la brasa">
+                        </a>
                     </figure>
                     <div class="info-product">
-                        <h2>Pollo a la brasa</h2>
-                        <p class="price">$60</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
+                        <h2>Comidas</h2>
                     </div>
                 </div>
 
+                <!-- Sección de bebidas -->
                 <div class="item">
                     <figure>
-                        <img src="ajidegallina.jpg" alt="Aji de gallina">
+                        <a class="boton-bebidas" href="bebidas.html">
+                            <img src="chicha.jpg" alt="Chicha">
+                        </a>
                     </figure>
                     <div class="info-product">
-                        <h2>Aji de gallina</h2>
-                        <p class="price">$20</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
+                        <h2>Bebidas</h2>
                     </div>
                 </div>
 
+                <!-- Sección de postres -->
                 <div class="item">
                     <figure>
-                        <img src="Ceviche.jpg" alt="Ceviche">
+                        <a class="postresbtn" href="postres.html">
+                            <img src="postre.jpg" alt="Postre">
+                        </a>
                     </figure>
                     <div class="info-product">
-                        <h2>Ceviche</h2>
-                        <p class="price">$20</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <figure>
-                        <img src="lomosaltao.jpeg" alt="Lomo saltado">
-                    </figure>
-                    <div class="info-product">
-                        <h2>Lomo saltado</h2>
-                        <p class="price">$30</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
-                    </div>
-                </div>
-
-                <div class="item">
-                    <figure>
-                        <img src="olacausa.jpg" alt="Causa">
-                    </figure>
-                    <div class="info-product">
-                        <h2>Causa</h2>
-                        <p class="price">$10</p>
-                        <button class="btn-add-cart">Añadir al carrito</button>
+                        <h2>Postres</h2>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <footer>
+    <!-- Footer con sección de comentarios -->
+	<footer>
         <div class="comment-section">
             <h2>Deja tu comentario</h2>
             <input type="text" id="name" placeholder="Tu nombre" required>
-            <div class="star-rating">
-    <span class="star" data-value="1">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="5">★</span>
-</div>
+             <div class="star-rating">
+        <span class="star" data-value="5">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="1">★</span>
+    </div>
             <textarea id="comment" rows="4" placeholder="Escribe tu comentario aquí..." required></textarea>
             <button id="submit-btn">Enviar</button>
 
@@ -161,149 +273,9 @@
 				});
 			</script>
         </div>
-    </footer>
-    <div id="special-orders" style="display:none;">
-        <h2>Pedidos Especiales</h2>
-        <ul id="orders-list">
-            <!-- Los pedidos se agregarán aquí -->
-        </ul>
-    </div>
-    <script>
-        document.getElementById('send-order-btn').addEventListener('click', function() {
-            // Obtiene los items del carrito
-            const cartItems = document.getElementById('cart-items').children;
-        
-            // Verifica si hay items en el carrito
-            if (cartItems.length === 0) {
-                alert('El carrito está vacío.');
-                return;
-            }
-        
-            // Crea un nuevo pedido
-            const order = document.createElement('li');
-            order.classList.add('order-item');
-        
-            // Copia los items del carrito al nuevo pedido
-            const orderContent = document.createElement('ul');
-            for (let item of cartItems) {
-                const clonedItem = item.cloneNode(true);
-                orderContent.appendChild(clonedItem);
-            }
-            order.appendChild(orderContent);
-        
-            // Agrega el nuevo pedido a la lista de pedidos
-            document.getElementById('orders-list').appendChild(order);
-        
-            // Limpia el carrito
-            document.getElementById('cart-items').innerHTML = '';
-        
-            // Muestra una confirmación
-            alert('Pedido enviado al apartado especial.');
-        
-            // Aquí podrías agregar lógica adicional para almacenar o enviar el pedido a un servidor.
-        });
-        </script>
-<style>
-    #special-orders.admin-visible {
-        display: block;
-    }
-    </style>
-    
-    <script>
-    // Función de autenticación simplificada
-    function authenticate() {
-        const password = prompt('Ingrese la contraseña para ver los pedidos:');
-        if (password === 'flavioesmuyinteligente') {
-            document.getElementById('special-orders').classList.add('admin-visible');
-        } else {
-            alert('Contraseña incorrecta.');
-        }
-    }
-    
-    // Llama a la función de autenticación
-    authenticate();
-    </script>
-            
+	</footer>
+    <!-- Scripts al final para optimización de carga -->
     <script src="index.js"></script>
     <script src="script.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.star');
-        const nameInput = document.getElementById('name');
-        const commentInput = document.getElementById('comment');
-        const submitBtn = document.getElementById('submit-btn');
-        const commentsList = document.getElementById('comments-list');
-
-        let currentRating = 0;
-
-        // Restaurar comentarios guardados
-        const savedComments = JSON.parse(localStorage.getItem('comentarios')) || [];
-        savedComments.forEach(addCommentToDOM);
-
-        // Interacción con estrellas
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                currentRating = parseInt(this.dataset.value);
-                updateStars(currentRating);
-            });
-        });
-
-        function updateStars(value) {
-            stars.forEach(star => {
-                const val = parseInt(star.dataset.value);
-                star.style.color = val <= value ? 'gold' : 'gray';
-            });
-        }
-
-        // Guardar comentario
-        submitBtn.addEventListener('click', function () {
-            const name = nameInput.value.trim();
-            const comment = commentInput.value.trim();
-
-            if (name === '' || comment === '' || currentRating === 0) {
-                alert('Por favor completa todos los campos y selecciona una calificación.');
-                return;
-            }
-
-            const newComment = {
-                name,
-                comment,
-                rating: currentRating,
-                date: new Date().toLocaleString()
-            };
-
-            // Guardar en localStorage
-            savedComments.push(newComment);
-            localStorage.setItem('comentarios', JSON.stringify(savedComments));
-
-            addCommentToDOM(newComment);
-
-            // Limpiar campos
-            nameInput.value = '';
-            commentInput.value = '';
-            updateStars(0);
-            currentRating = 0;
-        });
-
-        // Mostrar en el DOM
-        function addCommentToDOM(comment) {
-            const div = document.createElement('div');
-            div.classList.add('comment');
-
-            const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
-
-            div.innerHTML = `
-                <p><strong>${comment.name}</strong> (${comment.date})</p>
-                <p>${comment.comment}</p>
-                <p>Calificación: <span style="color:gold">${stars}</span></p>
-                <hr>
-            `;
-
-            commentsList.prepend(div);
-        }
-    });
-</script>
-
 </body>
 </html>
