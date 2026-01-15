@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Consola chad xdxd</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  font-family:"Share Tech Mono", monospace;
+  color:white;
+}
+
+#screen{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.panel{
+  border:3px solid red;
+  padding:25px;
+  min-width:600px;
+  max-width:700px;
+  background:black;
+}
+
+.title{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:15px;
+  border-bottom:2px solid red;
+  padding-bottom:10px;
+}
+
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+input{
+  background:black;
+  border:2px solid red;
+  color:white;
+  padding:10px;
+  font-size:16px;
+  width:260px;
+  text-align:center;
+  margin-top:10px;
+}
+
+button{
+  background:black;
+  border:2px solid red;
+  color:white;
+  padding:10px 25px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+button:hover{
+  background:red;
+  color:black;
+}
+
+#error{
+  display:none;
+  margin-top:15px;
+  text-align:center;
+  color:red;
+}
+
+#error img{
+  margin-top:10px;
+  max-width:250px;
+  border:2px solid red;
+}
+
+/* ADMIN */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:15px;
+}
+
+.cell{
+  border:2px solid red;
+  padding:8px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.cell:hover{
+  background:red;
+  color:black;
+}
+
+.header-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  margin-top:10px;
+}
+
+.header-row div{
+  border:2px solid red;
+  padding:6px;
+  text-align:center;
+}
+
+.close{
+  margin-top:20px;
+  text-align:center;
+  border:2px solid red;
+  padding:10px;
+  cursor:pointer;
+}
+
+.close:hover{
+  background:red;
+  color:black;
+}
+</style>
+</head>
+
+<body>
+<div id="screen">
+
+<!-- LOGIN -->
+<div id="login" class="panel center">
+  <div class="title">Consola chad xdxd</div>
+
+  <input id="email" type="email" placeholder="Admin email">
+  <input id="password" type="password" placeholder="Admin password">
+
+  <button id="loginBtn">Entrar</button>
+
+  <div id="error">
+    JAJJJ NO SE SABE LA CONTRASEÑA XDXDXD
+    <br>
+    <img src="https://i.imgur.com/Z6a7z2H.png">
+  </div>
+</div>
+
+<!-- CONSOLE -->
+<div id="console" class="panel" style="display:none;">
+  <div class="title">Consola chad xdxd</div>
+
+  <div class="header-row">
+    <div>&lt;</div>
+    <div>&gt;</div>
+  </div>
+
+  <div class="header-row">
+    <div>Weapon Scripts</div>
+    <div>Gear / Tools</div>
+  </div>
+
+  <div class="grid">
+    <div class="cell">Ban user</div>
+    <div class="cell">Delete post</div>
+    <div class="cell">Nuke board</div>
+    <div class="cell">Clear spam</div>
+    <div class="cell">Shadowban</div>
+    <div class="cell">IP lookup</div>
+    <div class="cell">Logs</div>
+    <div class="cell">Empty</div>
+  </div>
+
+  <div class="close" id="logoutBtn">Close</div>
+</div>
+
+</div>
+
+<script type="module">
+import { supabase } from "../js/supabase.js"
+
+const loginBtn = document.getElementById("loginBtn")
+const errorBox = document.getElementById("error")
+const loginPanel = document.getElementById("login")
+const consolePanel = document.getElementById("console")
+
+loginBtn.onclick = async () => {
+  const email = document.getElementById("email").value.trim()
+  const password = document.getElementById("password").value.trim()
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  })
+
+  if (error) {
+    errorBox.style.display = "block"
+  } else {
+    loginPanel.style.display = "none"
+    consolePanel.style.display = "block"
+  }
+}
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await supabase.auth.signOut()
+  location.reload()
+}
+</script>
+
+</body>
+</html>

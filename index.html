@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8">
+<title>Flaviochan</title>
+<link rel="stylesheet" href="css/4chan.css">
+</head>
+<body>
+<div id="top-gradient"></div>
+
+<div id="sidebar">
+  <div class="sidebox">
+    <div class="sidebox-title">Rendimiento Destacado</div>
+    <div id="top-users">Pera ta cargando,,,</div>
+  </div>
+</div>
+
+<div id="content">
+
+  <div id="top-logo">
+    <img src="img/banner.png" alt="Flaviochan">
+</styles>
+  </div>
+
+  <div id="page">
+
+    <div id="main">
+
+      <div class="window">
+        <div class="window-title">
+          Desarrollado por Flavio Corporation. Todos los derechos reservados 2009.
+          <span class="close">✕</span>
+        </div>
+        <div class="window-body">
+          Un foro previamente prometido como propuesta en la campaña electoral del partido APRA hoy realizada con el fin de apoyar al alumnado de la I.E Jose Galvez en todo lo que necesite.
+        </div>
+      </div>
+
+      <div class="window">
+        <div class="window-title">Tablones</div>
+        <div id="board-groups">
+  <div class="group"><div class="group-title">1ros</div><div class="group-list" id="col-1"></div></div>
+  <div class="group"><div class="group-title">2dos</div><div class="group-list" id="col-2"></div></div>
+  <div class="group"><div class="group-title">3ros</div><div class="group-list" id="col-3"></div></div>
+  <div class="group"><div class="group-title">4tos</div><div class="group-list" id="col-4"></div></div>
+  <div class="group"><div class="group-title">5tos</div><div class="group-list" id="col-5"></div></div>
+</div>
+
+      </div>
+
+      <div class="window">
+        <div class="window-title">Otros hilos</div>
+
+        <div class="thread-grid">
+          <div class="thread-card">
+            <img src="https://via.placeholder.com/150">
+            <a>Thread title</a>
+            <div>Placeholder</div>
+          </div>
+          <div class="thread-card">
+            <img src="https://via.placeholder.com/150">
+            <a>Thread title</a>
+            <div>Placeholder</div>
+          </div>
+          <div class="thread-card">
+            <img src="https://via.placeholder.com/150">
+            <a>Thread title</a>
+            <div>Placeholder</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">
+
+    <div id="footer-links">
+      <a href="#">Home</a>
+      <a href="#">No se xddxdd</a>
+      <a href="#">Tampoco se xdxd</a>
+      <a href="#">ADMIN</a>
+      <a href="#">Reglas</a>
+    </div>
+
+    <div id="footer-sub">
+      <a href="#">About</a> •
+      <a href="#">Feedback</a> •
+      <a href="#">Legal</a> •
+      <a href="#">Contact</a>
+    </div>
+
+    <div id="footer-copy">
+      Copyright © 2009–2026 Flavio Corporation LLC. All rights reserved.
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+import { supabase } from "./js/supabase.js"
+import { loadTop } from "./js/top.js"
+
+loadTop()
+
+async function loadBoards() {
+  const { data, error } = await supabase
+    .from("boards")
+    .select("*")
+    .order("name")
+
+  if (error) {
+    alert(error.message)
+    return
+  }
+
+  // Limpia columnas
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById("col-" + i).innerHTML = ""
+  }
+
+  data.forEach(b => {
+    const a = document.createElement("a")
+    a.href = `board.html?board=${b.slug}`
+    a.textContent = "/" + b.name + "/"
+
+    document.getElementById("col-" + b.grade).appendChild(a)
+  })
+}
+
+loadBoards()
+</script>
+
+</body>
+</html>
